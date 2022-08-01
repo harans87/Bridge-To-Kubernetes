@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.DevSpaces.Client.Kubectl</id>
+    <version>0.1.21.2</version>
+    <title>Microsoft.DevSpaces.Client.Kubectl</title>
+    <description>Microsoft.DevSpaces.Client.Kubectl</description>
+    <authors>Microsoft</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright 2018</copyright>
+  </metadata>
+  <files>
+    <file src="win\kubectl.exe" target="bin\win\kubectl.exe" />
+    <file src="osx\kubectl" target="bin\osx\kubectl" /> 
+    <file src="linux\kubectl" target="bin\linux\kubectl" /> 
+    <file src="Microsoft.DevSpaces.Client.Kubectl.targets" target="build\Microsoft.DevSpaces.Client.Kubectl.targets" />
+    <file src="NOTICE.txt" target="bin\NOTICE.txt" /> 
+  </files>
+</package>
