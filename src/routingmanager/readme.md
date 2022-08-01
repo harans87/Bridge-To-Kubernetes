@@ -36,7 +36,8 @@ Code: https://github.com/traefik/whoami
 
  Building
 -------------
- 
+Under routing manager folder run:
+ dotnet build
 
 Running/Debugging
 -------
@@ -54,7 +55,7 @@ Follow this by:
 
 Steps to debug routing manager custom image using vscode:
 
-1. Open the Mindaro Connect src folder in VsCode, please note the following will not work if you are inside dsc or routing manager folder. ex: ~/Mindaro-Connect/
+1. Open the Mindaro Connect src folder in VsCode (code Bridge-To-Kubernetes/src), please note the following will not work if you are inside dsc or routing manager folder.
 2. Create a launch.json using the following json and set the BRIDGE_ROUTINGMANAGERIMAGENAME variable to be your custom image.
 `{
     "version": "0.2.0",
@@ -93,6 +94,4 @@ Troubleshoot
 
 Release Management
 ------------------
-Build definition: [Mindaro-Connect-Services](https://devdiv.visualstudio.com/DevDiv/_build?definitionId=14020)
-
-Release definition: [Mindaro-Connect-Services](https://devdiv.visualstudio.com/DevDiv/_release?_a=releases&view=mine&definitionId=2787)
+TBD new pipelines coming in new github repo

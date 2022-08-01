@@ -42,6 +42,4 @@ Examine the output of devhostagent.
 
 Release Management
 ------------------
- Build definition: [Mindaro-Connect-Services](https://devdiv.visualstudio.com/DevDiv/_build?definitionId=14020)
-
- Release definition: [Mindaro-Connect-Services](https://devdiv.visualstudio.com/DevDiv/_release?_a=releases&view=mine&definitionId=2787)
+TBD need new git pipelines - this was under services in vsts

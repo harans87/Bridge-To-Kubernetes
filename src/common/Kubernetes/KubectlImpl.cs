@@ -405,8 +405,8 @@ namespace Microsoft.BridgeToKubernetes.Common.Kubernetes
         }
 
         /// <summary>
-        /// Builds a path to the kubectl executable, assuming kubectl was installed by the Microsoft.DevSpaces.Client.Kubectl NuGet package.
-        /// The Microsoft.DevSpaces.Client.Kubectl.targets file in the NuGet package determines the relative path kubectl is installed to ("./kubectl/[win|osx|linux]")
+        /// Builds a path to the kubectl executable, assuming kubectl was downloaded as part of the build pipeline / as part of dsc.csproj for local build.
+        /// The relative path kubectl is installed to: "./kubectl/[win|osx|linux]"
         /// </summary>
         /// <returns>Absolute path to a kubectl executable for the current OS</returns>
         /// <exception cref="KubectlException">If the kubectl path can't be determined because the current OS isn't recognized</exception>

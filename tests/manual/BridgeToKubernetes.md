@@ -34,50 +34,49 @@ Please test these scenarios in this order to ensure that the Bridge to Kubernete
 2. Install the Bridge to Kubernetes extension: https://marketplace.visualstudio.com/items?itemName=ms-azuretools.mindaro.
 
 **Install sample application**
-1. Install the Bike Sharing sample application using the [Azure Cloud Shell](https://review.docs.microsoft.com/en-us/azure/cloud-shell/overview?branch=pr-en-us-114298).
+1. Install the Todo App sample application. Note below assumes you have a local or remote Kubernetes cluster created and it has a todo-app namespace.
     ```
     git clone https://github.com/microsoft/mindaro.git
-    cd mindaro/
-    chmod +x ./bridge-quickstart.sh
-    ./bridge-quickstart.sh -g MyResourceGroup -n MyAKS
+    cd mindaro/samples/todo-app
+    kubectl apply -f deployment.yaml --namespace todo-app
     ```
-2. Navigate to public URL `http://bikeapp.bikesharingweb.EXTERNAL_IP.nip.io` and verify the app works by renting and returning a bike.
+2. Navigate to public URL `http://EXTERNAL_IP.nip.io` and verify the app works by entering a task or going to stats page.
 
 ## <b id="bridge-vs">Bridge to Kubernetes</b>
 **Connect a service**
-1. Open `mindaro/samples/BikeSharingApp/ReservationEngine/app.csproj` from the Bike Sharing sample application in Visual Studio. 
+1. Open `mindaro/samples/todo-app/` folder from the TodoApp sample application in Visual Studio. 
 2. Select _Container in Kubernetes_ option from the debug dropdown menu.
 3. Edit the app properties for the _Container in Kubernetes_ launch profile.
     * Select your subscription and cluster.
-    * Select the namespace _bikeapp_.
-    * Select the service _reservationengine_.
+    * Select the namespace _todo-app_.
+    * Select the service _stats-api_.
     * Select the launch profile _app_.
     * If you are testing isolated mode, make sure to check "Enable routing isolation" box.
-    * Enter browser link `http://bikeapp.bikesharingweb.EXTERNAL_IP.nip.io`.
+    * Enter browser link `http://EXTERNAL_IP.nip.io`.
 4. Hit _Ok_ and save your changes.
 
 **Debug a service**
-1. Open `BikesHelper.cs` and set a breakpoint at line 26.
+1. Open `server.cs` in stats-api and set a breakpoint at line 37.
 2. Navigate to the sample application by opening the public URL. 
-3. Select Terrence Freeland (customer) as the user, then select a bike to rent. Select _Rent bike_. 
-4. Return to Visual Studio and observe the breakpoint at line 26 has been hit. Hit _F5_ to resume the service.
+3. Click the stats link. 
+4. Return to Visual Studio and observe the breakpoint at line 37 has been hit. Hit _F5_ to resume the service.
 5. Verify the log statement appears in the output.
-6. Remove the breakpoint at line 26.
+6. Remove the breakpoint at line 37.
 
 **Update application**
-1. Edit line 26 in `BikesHelper.cs` to look like this.
+1. Right before line 37 enter below line:
     ```
-    LogUtility.LogWithContext(requestId, "RESERVING BIKEID" + bikeId);
+    created = 20;
     ```
 2. Save your changes and click _Run_ then _Restart Debugging_. 
-4. After you are reconnected, verify the updated log statement appears in the output.
+4. After you are reconnected, verify the updated created count shows up when you refresh stats page.
 
 **Automatically disconnect and restore**
 1. Click _Run_ then _Stop Debugging_ to stop the debugger.
 2. Verify that the original log statement appears in the output.
 
 **Reconnect and manually disconnect the service**
-1. Open the settings for the _Bridge to Kubernetes_ feature. Go to Tools -> Options -> Kubernetes Debugging Tools -> Settings.
+1. Open the settings go to Tools -> Options -> Kubernetes Debugging Tools -> Settings.
 2. Set _Bridge to Kubernetes_ -> _Disconnect After Debugging_ to False to STOP automatically disconnecting the service in the future.
 3. Click on the start button next to _Bridge to Kubernetes_. Verify you are NOT prompted for service name, port, or launch task.
 4. Click _Run_. Refresh the bike rental page and verify that you see the updated log statement in the output.
@@ -118,16 +117,6 @@ Please test these scenarios in this order to ensure that the Bridge to Kubernete
 **Prerequisite**
 1. The [Bridge to Kubernetes](https://aka.ms/mindaro-marketplace-vscode) latest extension version
 
-**Install Bikesharing sample application**
-1. Install the Bike Sharing sample application using the [Azure Cloud Shell](https://review.docs.microsoft.com/en-us/azure/cloud-shell/overview?branch=pr-en-us-114298).
-    ```
-    git clone https://github.com/microsoft/mindaro.git
-    cd mindaro/
-    chmod +x ./bridge-quickstart.sh
-    ./bridge-quickstart.sh -g MyResourceGroup -n MyAKS
-    ```
-2. Navigate to public URL `http://bikeapp.bikesharingweb.EXTERNAL_IP.nip.io` and verify the app works by renting and returning a bike.
-
 **Install Todoapp sample application**
 1. Inside the same "mindaro" directory that you cloned above, create a new namespace and deploy the todoapp:
     ```
@@ -138,101 +127,82 @@ Please test these scenarios in this order to ensure that the Bridge to Kubernete
 
 ## <b id="bridge-vscode">Bridge to Kubernetes</b>
 **Connect a service**
-1. Open `mindaro/samples/BikeSharingApp/Bikes` from the Bike Sharing sample application in Visual Studio Code. 
-2. Open the Azure Kubernetes Service extension and select the _bikeapp_ namespace in the _MyAKS_ cluster.
+1. Open `mindaro/samples/todo-app` from the Bike Sharing sample application in Visual Studio Code. 
+2. Open the Azure Kubernetes Service extension and select the _todo-app_ namespace in the _MyAKS_ cluster.
 3. Open the terminal and use the `npm install` command to install the application.
 4. Select the _Debug_ icon on the left and select _Bridge to Kubernetes_ at the top.
 5. Click on the start button next to _Bridge to Kubernetes_.
-    * Select the service _bikes_.
-    * Enter the port _3000_.
-    * Select launch task _Launch via NPM_.
+    * Select the service _stats-api_.
+    * Enter the port _3001_.
+    * Select launch task _Launch via Dev..._.
     * Select _No_ when asked if you want to be isolated from other developers.
 6. When prompted to allow the Endpoint Manager to run as root, say yes.
     * Confirm this works on BOTH Windows 10 and MacOS.
 
 **Debug a service**
-1. Open `server.js` and set a breakpoint at line 233.
+1. Open `server.js` inside stats-api folder and set a breakpoint at line 37.
 2. Navigate to the sample application by opening the public URL. 
-3. Select Aurelia Briggs (customer) as the user, then select a bike to rent. Notice the image for the bike does not load. 
-4. Return to Visual Studio Code and observe the breakpoint at line 233 has been hit. Hit _F5_ to resume the service.
-5. Return to your browser and verify you see a placeholder image for the bike.
-6. Remove the breakpoint at line 233 in `server.js`.
+3. Click the stats link.
+4. Return to Visual Studio Code and observe the breakpoint at line 37 has been hit. Hit _F5_ to resume the service.
+5. Return to your browser and verify you see stats page finished loading.
+6. Remove the breakpoint at line 37 in `server.js`.
 
 **Update application**
-1. Go to `server.js` to remove lines 234 and 235.
+**Update application**
+1. Right before line 37 enter below line:
     ```
-    // Hard code image url *FIX ME*
-    theBike.imageUrl = "/static/logo.svg";
+    created = 20;
     ```
-2. Update these lines to look like this.
-    ```
-    var theBike = result;
-    theBike.id = theBike._id;
-    delete theBike._id;
-    ```
-3. Save your changes and click _Run_ then _Restart Debugging_. 
-4. After you are reconnected, refresh your browser and verify that you no longer see a placeholder image for the bike.
+2. Save your changes and click _Run_ then _Restart Debugging_. 
+4. After you are reconnected, verify the updated created count shows up when you refresh stats page.
 
 **Automatically disconnect and restore**
 1. Click _Run_ then _Stop Debugging_ to stop the debugger.
-2. Return to the browser and refresh the bike rental page. Verify that your local change is gone and you see a placeholder image for the bike.
+2. Return to the browser and refresh the stats page. Verify that your local change is gone and you see regular result for created count.
 
 **Reconnect and manually disconnect the service**
 1. Open the settings for the _Bridge to Kubernetes_ extension and deselect _Disconnect your Debugging_ to STOP automatically disconnecting the service in the future.
-2. Click on the start button next to _Launch via NPM with Kubernetes (Preview)_. Verify you are NOT prompted for service name, port, or launch task.
+2. Click on the start button next to _Launch via Dev with Kubernetes..._ Verify you are NOT prompted for service name, port, or launch task.
 3. When prompted to allow Endpoint Manager to run as root, say yes.
     * Confirm this works on BOTH Windows 10 and MacOS.
-4. Click _Run_. Refresh the bike rental page and verify that your local change worked and you no longer see a placeholder image for the bike.
+4. Click _Run_. Refresh the stats page and verify that your local change of 20 shows up under created.
 5. Click _Stop Debugging_. Refresh the bike rental page and verify that you see a Bad Gateway error on the bike rental page.
-6. Click on the _Kubernetes_ icon in the bottom bar, and select _Disconnect your service_. Refresh the bike rental page and verify that you see the placeholder image for the bike.
+6. Click on the _Kubernetes_ icon in the bottom bar, and select _Disconnect your service_. Refresh the bike rental page and verify that you see regular (not overriden) value.
 
 ## <b id="bridge-routing-vscode">Bridge to Kubernetes with Routing</b>
 **Connect a service**
-1. Open `mindaro/samples/BikeSharingApp/Bikes` from the Bike Sharing sample application in Visual Studio Code. 
-2. Open the Azure Kubernetes Service extension and select the _bikeapp_ namespace in the _MyAKS_ cluster.
+1. Open `mindaro/samples/todo-app/stats-api` from the Todo-App sample application in Visual Studio Code. 
+2. Open the Azure Kubernetes Service extension and select the _todo-app_ namespace in the _MyAKS_ cluster.
 3. Open the terminal and use the `npm install` command to install the application.
 4. Select the _Debug_ icon on the left and select _Bridge to Kubernetes_ at the top.
 5. Click on the start button next to _Bridge to Kubernetes_.
-    * Select the service _bikes_.
-    * Enter the port _3000_.
-    * Select launch task _Launch via NPM_.
+    * Select the service _stats-api_.
+    * Enter the port _3001_.
+    * Select launch task _Launch via Dev_.
     * Select _Yes_ when asked if you want to be isolated from other developers.
 6. When prompted to allow the Endpoint Manager to run as root, say yes.
     * Confirm this works on BOTH Windows 10 and MacOS.
-7. Click the _Kubernetes_ icon on the orange bar at the bottom. Confirm that four ingresses are listed:
-    * bikesharingweb
-    * bikesharingweb isolated on \<routing-header\>
-    * gateway
-    * gateway isolated on \<routing-header\>
+
 
 **Debug a service**
-1. Open `server.js` and set a breakpoint at line 233.
-2. Navigate to the sample application by opening the public URL for ingress _bikesharingweb-\<routing-header\>_. 
-3. Select Aurelia Briggs (customer) as the user, then select a bike to rent. Notice the image for the bike does not load. 
-4. Return to Visual Studio Code and observe the breakpoint at line 233 has been hit. Hit _F5_ to resume the service.
-5. Return to your browser and verify you see a placeholder image for the bike.
-6. Remove the breakpoint at line 233 in `server.js`.
+1. Open `server.js` in stats-api folder set a breakpoint at line 37.
+2. Navigate to the sample application (http://(your prefix).EXTERNALIP.nip.io)
+3. Click stats link.
+4. Notice that your Visual Studio Code breakpoint at line 37 has been hit. Hit _F5_ to resume the service.
+5. Return to your browser and verify page loaded.
+6. Remove the breakpoint at line 37 in `server.js`.
 
 **Update application**
-1. Go to `server.js` to remove lines 234 and 235.
+1. Right before line 37 enter below line:
     ```
-    // Hard code image url *FIX ME*
-    theBike.imageUrl = "/static/logo.svg";
+    created = 20;
     ```
-2. Update these lines to look like this.
-    ```
-    var theBike = result;
-    theBike.id = theBike._id;
-    delete theBike._id;
-    ```
-3. Save your changes and click _Run_ then _Restart Debugging_. 
-4. After you are reconnected, refresh your browser and verify that you no longer see a placeholder image for the bike.
-5. Open the public URL for the _bikesharingweb_ non-isolated ingress. 
-6. Select Aurelia Briggs (customer) as the user, then select a bike to rent. Verify that you still see a placeholder image.
+2. Save your changes and click _Run_ then _Restart Debugging_.
+4. After you are reconnected, verify the updated created count shows up when you refresh stats page.
 
 **Automatically disconnect and restore**
 1. Click _Run_ then _Stop Debugging_ to stop the debugger.
-2. Return to the browser and refresh the bike rental page. Verify that your local change is gone and you see a placeholder image for the bike.
+2. Return to the browser and refresh the page. Verify that your local change is gone and you see a regular created count.
 
 ## <b id="custom-vscode">KubernetesLocalProcessConfig.yaml</b>
 **Customize environment with KubernetesLocalProcessConfig.yaml**

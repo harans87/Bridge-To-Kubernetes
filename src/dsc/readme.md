@@ -3,7 +3,7 @@
  Introduction
  ------------
  This project produces a command line executable (dsc.exe) that drives the Library for connecting your local machine to a Kubernetes cluster.
- DSC stands for "Dev Spaces Connect", that was a very early name of the Bridge feature. Renaming it to "bridge.exe" created considerable signing issues on MacOS (cf. https://devdiv.visualstudio.com/DevDiv/_git/Mindaro-Connect/pullrequest/345369), so we kept dsc.exe.
+ DSC stands for "Dev Spaces Connect", that was a very early name of the Bridge feature. Renaming it to "bridge.exe" created considerable signing issues on MacOS, so we kept dsc.exe.
 
 Prerequisites
 -------------
@@ -88,22 +88,7 @@ Troubleshoot
 
 Release Management
 ------------------
-Build pipeline: [Mindaro-Connect-CLI](https://devdiv.visualstudio.com/DevDiv/_build?definitionId=13022)
-- Produces the Microsoft.BridgeToKubernetes.CLI NuGet package containing dsc executables for Windows, OSX, and Linux. The executables are fully self-contained, meaning a single file that includes the core dsc functionality plus the .NET Core runtime and all dependencies. Self-containing is necessary because dsc is integrated into VS, and providing the necessary dependencies and runtime in the VS environment would add a lot of complexity that can be avoided by packaging the .exe with everything it needs.
-- Produces lpk-win.zip, lpk-osx.zip, and lpk-linux.zip containing dsc (and other dependencies like EndpointManager and kubectl) for integration into the Bridge to Kubernetes VS Code extension. The executables in the .zip files are not self-contained, meaning all the assemblies they depend on are also in the .zips. 
-
-Release pipeline: [Mindaro-Connect-Nuget](https://devdiv.visualstudio.com/DevDiv/_release?_a=releases&view=mine&definitionId=2494)
-- Pushes the Microsoft.BridgeToKubernetes.CLI NuGet package to Mindaro feeds (see below), where it's consumed by the Kubernetes Tools extension for Visual Studio and the CLI.
-
-Release pipeline: [Mindaro-Connect-Zip](https://devdiv.visualstudio.com/DevDiv/_release?_a=releases&view=mine&definitionId=2564)
-- Copies the lpk-win.zip, lpk-osx.zip, and lpk-linux.zip files to the mindaromaster, mindarostaging, and mindaro Storage Accounts so the Bridge to Kubernetes VS Code extensions's vscode-file-downloader-api can download them.
-
-NuGet Feeds
------------
-Available in Microsoft.BridgeToKubernetes.EndpointManager on:
-- [Mindaro](https://dev.azure.com/devdiv/DevDiv/_packaging?_a=feed&feed=Mindaro)
-- [Mindaro-Dev](https://dev.azure.com/devdiv/DevDiv/_packaging?_a=feed&feed=Mindaro-Dev)
-- [Mindaro-Staging](https://dev.azure.com/devdiv/DevDiv/_packaging?_a=feed&feed=Mindaro-Staging)
+TBD - We need to implement github actions/release pipeliens
 
 Managed Identity Flow
 ---------------------

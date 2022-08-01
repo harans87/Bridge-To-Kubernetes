@@ -44,6 +44,6 @@ Troubleshoot
 
 Release Management
 ------------------
- Build definition: [Mindaro-Cli-new](https://devdiv.visualstudio.com/DevDiv/_build?definitionId=10656)
+ Build definition: [Mindaro-Cli-new](TBD need new git pipelines)
 
- Release definition: [Mindaro-Cli-new](https://devdiv.visualstudio.com/DevDiv/_release?view=mine&definitionId=1357)
+ Release definition: [Mindaro-Cli-new](TBD need new git pipelines)

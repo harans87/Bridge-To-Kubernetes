@@ -53,19 +53,5 @@ Troubleshoot
 
 Release Management
 ------------------
-Build pipeline: [Mindaro-Connect-CLI](https://devdiv.visualstudio.com/DevDiv/_build?definitionId=13022)
-- Produces the Microsoft.BridgeToKubernetes.EndpointManager NuGet package containing EndpointManager executables for Windows, OSX, and Linux. The executables are fully self-contained, meaning a single file that includes the core EndpointManager functionality plus the .NET Core runtime and all dependencies. Self-containing is necessary because EndpointManager is integrated into VS, and providing the necessary dependencies and runtime in the VS environment would add a lot of complexity that can be avoided by packaging the .exe with everything it needs.
-- Produces lpk-win.zip, lpk-osx.zip, and lpk-linux.zip containing EndpointManager (and bridge) executables for integration into the Bridge to Kubernetes VS Code extension. The executables in the .zip files are not self-contained, meaning all the assemblies they depend on are also in the .zips. 
+TBD - we need to put new git pipelines here.
 
-Release pipeline: [Mindaro-Connect-Nuget](https://devdiv.visualstudio.com/DevDiv/_release?_a=releases&view=mine&definitionId=2494)
-- Pushes the Microsoft.BridgeToKubernetes.EndpointManager NuGet package to Mindaro feeds (see below), where it's consumed by the Kubernetes Tools extension for Visual Studio and the CLI.
-
-Release pipeline: [Mindaro-Connect-Zip](https://devdiv.visualstudio.com/DevDiv/_release?_a=releases&view=mine&definitionId=2564)
-- Copies the lpk-win.zip, lpk-osx.zip, and lpk-linux.zip files to the mindaromaster, mindarostaging, and mindaro Storage Accounts so the Bridge to Kubernetes VS Code extensions's vscode-file-downloader-api can download them.
-
-NuGet Feeds
------------
-Available in Microsoft.BridgeToKubernetes.EndpointManager on:
-- [Mindaro](https://dev.azure.com/devdiv/DevDiv/_packaging?_a=feed&feed=Mindaro)
-- [Mindaro-Dev](https://dev.azure.com/devdiv/DevDiv/_packaging?_a=feed&feed=Mindaro-Dev)
-- [Mindaro-Staging](https://dev.azure.com/devdiv/DevDiv/_packaging?_a=feed&feed=Mindaro-Staging)

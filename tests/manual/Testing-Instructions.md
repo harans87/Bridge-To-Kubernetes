@@ -58,7 +58,7 @@ Follow these priorities when deciding which environment to test:
 Attempt to reproduce old fixed bugs in rotating environments and platforms to ensure that the fixes don't regress. Focus on bugs with high customer impact that wouldn't be caught during normal testing.
 
 # <b id="reporting">Reporting</b>
-When reporting testing results for the CLI, please include the following information using this [bug template](https://devdiv.visualstudio.com/DevDiv/_workitems/create/Bug?templateId=67bceed9-7251-4cca-899d-292ae298bb16&ownerId=4119bafd-7a6c-4781-8600-0c9a3bb2dbd0).
+When reporting testing results for the CLI, please include the following information using this [bug template](TBD need new git bug template).
 
 * CLI/VSIX Environment (Prod, Pre-Prod, Staging, or Dev)
 * CLI/VSIX build number
