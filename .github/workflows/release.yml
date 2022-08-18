@@ -50,7 +50,6 @@ jobs:
           Write-Output "file is: "$file
           New-Item -Path '${{ github.workspace }}\src\dsc\bin\Release\netcoreapp3.1\${{ matrix.mode }}\publish\kubectl' -ItemType Directory
           $filePath = '${{ github.workspace }}\src\dsc\bin\Release\netcoreapp3.1\${{ matrix.mode }}\publish\kubectl\'+$dir
-          Write-Output "file path is: "$filePath
           New-Item -Path $filePath -ItemType Directory
           $fileName = $filePath + '\' + $file
           Write-Output "file name is: "$fileName 
